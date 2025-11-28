@@ -1,83 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <title>即将跳转</title>
+   <title>Redirecting...</title>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <style>
-       body {
-           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-           display: flex;
-           flex-direction: column;
-           align-items: center;
-           justify-content: center;
-           height: 100vh;
-           margin: 0;
-           background-color: #f5f5f7;
-           color: #333;
-       }
-       .container {
-           text-align: center;
-           max-width: 90%;
-       }
-       h1 {
-           font-size: 24px;
-           margin-bottom: 20px;
-       }
-       .btn {
-           display: inline-block;
-           padding: 12px 24px;
-           font-size: 16px;
-           color: #fff;
-           background-color: #007AFF;
-           border: none;
-           border-radius: 8px;
-           text-decoration: none;
-           cursor: pointer;
-           transition: background-color 0.2s;
-       }
-       .btn:hover {
-           background-color: #0056b3;
-       }
-       #error {
-           color: #ff3b30;
-           margin-top: 20px;
-       }
-   </style>
    <script>
-       function redirectToUrl() {
-           const url = new URLSearchParams(window.location.search).get('redirectUrl');
+       function redirect() {
+           var url = new URLSearchParams(window.location.search).get('redirectUrl');
            if (url) {
-               // 可选：校验 URL 是否合法（防止 open redirect 漏洞）
-               try {
-                   new URL(url);
-                   window.location.href = url;
-               } catch (e) {
-                   document.getElementById('error').textContent = '无效的重定向链接';
-                   document.getElementById('error').style.display = 'block';
-               }
+               window.location.href = url;
            } else {
-               document.getElementById('error').textContent = '缺少重定向URL参数';
                document.getElementById('error').style.display = 'block';
            }
        }
-
-       // 页面加载完成后，解析 URL 并决定是否显示按钮
-       window.onload = function() {
-           const url = new URLSearchParams(window.location.search).get('redirectUrl');
-           if (!url) {
-               document.getElementById('error').textContent = '缺少重定向URL参数';
-               document.getElementById('error').style.display = 'block';
-               document.getElementById('continueBtn').style.display = 'none';
-           }
-       };
    </script>
 </head>
-<body>
-   <div class="container">
-       <h1>即将跳转到外部网站</h1>
-       <button id="continueBtn" class="btn" onclick="redirectToUrl()">继续</button>
-       <p id="error" style="display: none;"></p>
-   </div>
+<body onload="redirect()">
+   <p>正在跳转...</p>
+   <p id="error" style="display: none;">缺少重定向URL参数</p>
 </body>
 </html>
